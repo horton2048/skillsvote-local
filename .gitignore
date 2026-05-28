@@ -281,3 +281,6 @@ $RECYCLE.BIN/
 **/.skills_vote/
 
 !**/.gitkeep
+
+# local test venv (skills_vote.score)
+.venv-score/

@@ -1,3 +1,20 @@
+> ## 🧩 个性化扩展:skillsvote（本仓库新增）
+>
+> 在 MemTensor SkillsVote 基础上做的二次开发:**本地优先的"这个 skill 该不该装?"个性化评估器**。
+> 粘一个 skill 链接(GitHub / skills.vote),它会基于你**本地的 Claude Code 使用习惯和环境**给出
+> 只属于你的评分、安装建议,并生成一段可一键安装并适配本地的提示词。**数据不出本机。**
+>
+> 一键运行(无需克隆):
+> ```bash
+> uvx skillsvote          # 或 pipx run skillsvote;然后浏览器打开 http://127.0.0.1:8773
+> ```
+> 从本仓库直接装:`uvx --from "git+https://github.com/<你的账号>/<仓库名>#subdirectory=packaging" skillsvote`
+>
+> 代码在 [`src/skills_vote/score/`](src/skills_vote/score),打包配置在 [`packaging/`](packaging)。
+> 详见 [packaging/README.md](packaging/README.md)。
+
+---
+
 <div align="center">
   <h1>SkillsVote</h1>
   <p><strong>Lifecycle Governance of Agent Skills: From Collection and Recommendation to Evolution</strong></p>
