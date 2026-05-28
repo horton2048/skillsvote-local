@@ -4,14 +4,16 @@
 > 粘一个 skill 链接(GitHub / skills.vote),它会基于你**本地的 Claude Code 使用习惯和环境**给出
 > 只属于你的评分、安装建议,并生成一段可一键安装并适配本地的提示词。**数据不出本机。**
 >
-> 一键运行(无需克隆):
+> 一键运行(从 Release 安装,无需克隆):
 > ```bash
-> uvx skillsvote          # 或 pipx run skillsvote;然后浏览器打开 http://127.0.0.1:8773
+> uvx --from "https://github.com/horton2048/skillsvote-local/releases/download/v0.1.0/skillsvote-0.1.0-py3-none-any.whl" skillsvote
+> # 然后浏览器打开 http://127.0.0.1:8773
 > ```
-> 从本仓库直接装:`uvx --from "git+https://github.com/<你的账号>/<仓库名>#subdirectory=packaging" skillsvote`
+> 发布到 PyPI 后会更简单:`uvx skillsvote`(或 `pipx run skillsvote`)。
 >
 > 代码在 [`src/skills_vote/score/`](src/skills_vote/score),打包配置在 [`packaging/`](packaging)。
-> 详见 [packaging/README.md](packaging/README.md)。
+> 详见 [packaging/README.md](packaging/README.md)。最新版本见
+> [Releases](https://github.com/horton2048/skillsvote-local/releases)。
 
 ---
 
