@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "skillsvote"
-version = "0.2.0"
+version = "0.2.1"
 description = "Local-first, personalized 'should I install this skill?' assessor for Claude Code agents."
 readme = "README.md"
 requires-python = ">=3.10"
