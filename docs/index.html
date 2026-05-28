@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SkillsVote — Should you install this skill?</title>
+  <meta name="description" content="A local-first, personalized 'should I install this skill?' assessor for Claude Code. Paste a link, score it against your local usage and machine, get an install verdict — your data never leaves your laptop." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ============== NAV ============== -->
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="#top">
+      <span class="brand-mark"></span>
+      <span>SkillsVote</span>
+      <span class="brand-tag" data-i18n="nav.tag">local edition</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#what" data-i18n="nav.what">What's a skill?</a>
+      <a href="#how" data-i18n="nav.how">How it works</a>
+      <a href="#dims" data-i18n="nav.dims">Scoring</a>
+      <a href="#privacy" data-i18n="nav.privacy">Privacy</a>
+      <a href="#faq" data-i18n="nav.faq">FAQ</a>
+      <div class="lang-toggle" role="tablist" aria-label="Language">
+        <button data-lang="en" class="active">EN</button>
+        <button data-lang="zh">中文</button>
+      </div>
+      <a class="nav-cta" href="#install" data-i18n="nav.cta">
+        <span>Get started</span><span>↗</span>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<a id="top"></a>
+
+<!-- ============== HERO ============== -->
+<section class="hero">
+  <div class="container hero-inner">
+    <div class="hero-copy">
+      <div class="eyebrow">
+        <span class="dot"></span>
+        <span data-i18n="hero.eyebrow">Local-first · For Claude Code</span>
+        <span class="pill">v0.2.1</span>
+      </div>
+
+      <h1 class="h1">
+        <span data-i18n="hero.h1.a">Should you</span>
+        <span class="strike" data-i18n="hero.h1.b">install</span>
+        <span data-i18n="hero.h1.c">this</span>
+        <span class="accent" data-i18n="hero.h1.d">skill?</span>
+      </h1>
+
+      <p class="lede" data-i18n="hero.lede">
+        Paste a Claude Code skill link. SkillsVote scores it against <b>your</b> local usage history and <b>your</b> actual machine — then tells you whether it's worth installing, and writes a one-click install prompt adapted to your setup. Nothing leaves your laptop.
+      </p>
+
+      <div class="hero-cmd">
+        <div class="cmd-row" data-copy-row>
+          <span class="prompt">$</span>
+          <code data-i18n="hero.cmd">uvx skillsvote</code>
+          <button class="copy" data-copy-target><span data-i18n="hero.copy">Copy</span></button>
+        </div>
+        <div class="hero-meta">
+          <span>⚡ <span data-i18n="hero.meta.a">No install — runs via</span> <code style="color:var(--ink-2)">uvx</code></span>
+          <span class="sep">·</span>
+          <span>🔌 <span data-i18n="hero.meta.b">Opens</span> <code style="color:var(--ink-2)">127.0.0.1:8773</code></span>
+          <span class="sep">·</span>
+          <span>📦 <span data-i18n="hero.meta.c">MIT licensed</span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- right: sample verdict card -->
+    <div class="hero-preview">
+      <span class="float-tag tl"><span class="ic">📥</span> <span data-i18n="hero.float.a">Pasted link</span></span>
+      <div class="preview-card">
+        <div class="pv-head">
+          <div>
+            <div class="pv-name">git-cli-power-user</div>
+            <div class="pv-source">github.com/anthropics/skills/tree/main/skills/git-cli</div>
+          </div>
+          <span class="pv-verdict">● <span data-i18n="hero.verdict">Recommended</span></span>
+        </div>
+        <div class="pv-score">
+          <span class="big">78</span><span class="of">/100</span>
+        </div>
+        <p class="pv-reason" data-i18n="hero.reason">Matches 38 prompts in your history · keywords: <b style="color:var(--ink)">commit, rebase, branch, PR</b> · last used 2 days ago · you don't have this skill yet.</p>
+        <div class="pv-dims">
+          <div class="pv-dim" style="--c:var(--c-relevance); --w:74%">
+            <div class="pv-dim-label" data-i18n="dim.relevance.short">Relevance</div>
+            <div class="pv-bar"><i></i></div>
+            <div class="pv-val">0.74</div>
+          </div>
+          <div class="pv-dim" style="--c:var(--c-demand); --w:66%">
+            <div class="pv-dim-label" data-i18n="dim.demand.short">Demand</div>
+            <div class="pv-bar"><i></i></div>
+            <div class="pv-val">0.66</div>
+          </div>
+          <div class="pv-dim" style="--c:var(--c-recency); --w:91%">
+            <div class="pv-dim-label" data-i18n="dim.recency.short">Recency</div>
+            <div class="pv-bar"><i></i></div>
+            <div class="pv-val">0.91</div>
+          </div>
+          <div class="pv-dim" style="--c:var(--c-gap); --w:66%">
+            <div class="pv-dim-label" data-i18n="dim.gap.short">Gap</div>
+            <div class="pv-bar"><i></i></div>
+            <div class="pv-val">0.66</div>
+          </div>
+          <div class="pv-dim" style="--c:var(--c-fit); --w:100%">
+            <div class="pv-dim-label" data-i18n="dim.fit.short">Fit</div>
+            <div class="pv-bar"><i></i></div>
+            <div class="pv-val">1.00</div>
+          </div>
+        </div>
+        <div class="pv-footer">
+          <span data-i18n="hero.pv.footer">Scored against 1,243 local prompts · macOS · git ✓ gh ✓</span>
+          <span class="pv-chip">🔒 <span data-i18n="hero.pv.chip">on-device</span></span>
+        </div>
+      </div>
+      <span class="float-tag br"><span class="ic">✨</span> <span data-i18n="hero.float.b">+ install prompt ready</span></span>
+    </div>
+  </div>
+</section>
+
+<!-- ============== WHAT IS A SKILL ============== -->
+<section class="sect" id="what">
+  <div class="container">
+    <span class="sect-eyebrow" data-i18n="what.eyebrow">01 / What's the problem</span>
+    <h2 class="sect-title" data-i18n="what.title">
+      Agent "skills" are exploding. Most of them aren't for <em style="font-style:italic">you</em>.
+    </h2>
+    <p class="sect-lede" data-i18n="what.lede">
+      A <code style="background:rgba(91,124,245,0.14);color:var(--brand-1);padding:1px 6px;border-radius:4px;font-family:var(--font-mono);font-size:0.9em">SKILL.md</code> file teaches a coding agent (Claude Code, Codex, OpenClaw …) how to do one specific job — write a migration, scaffold a Next.js page, debug a flaky test. There are now <b style="color:var(--ink)">over 1.68M of them on GitHub</b>. Browsing them feels like browsing the App Store with the reviews removed.
+    </p>
+
+    <div class="skill-explain">
+      <div class="explain-card">
+        <h3><span class="badge-emoji">🧩</span> <span data-i18n="what.left.h">A skill, in 30 seconds</span></h3>
+        <p data-i18n="what.left.p">A skill is a markdown file with front-matter, a description, and instructions. The agent reads it before tackling a task. Think of it as a tiny, focused expert that the agent loads on demand.</p>
+        <pre class="skill-md"><span class="c">---</span>
+<span class="k">name:</span> <span class="v">git-cli-power-user</span>
+<span class="k">description:</span> <span class="v">Run git workflows from the CLI:</span>
+  <span class="v">branching, rebasing, conflict resolution, PRs.</span>
+<span class="k">when_to_use:</span> <span class="v">user is in a git repo and asks</span>
+  <span class="v">about commits, branches, or pull requests.</span>
+<span class="c">---</span>
+
+<span class="h"># Instructions</span>
+1. Always check <span class="v">`git status`</span> before suggesting fixes.
+2. Prefer <span class="v">`gh pr create`</span> over web flows…</pre>
+      </div>
+
+      <div class="explain-card">
+        <h3><span class="badge-emoji">🤔</span> <span data-i18n="what.right.h">The "should I install this?" tax</span></h3>
+        <p data-i18n="what.right.p">For every skill you actually use, you'll evaluate ten. The "is this for me?" decision is annoying because the answer depends on three things only <b>you</b> know:</p>
+        <ul class="problem-list">
+          <li><span class="num">01</span><span><b data-i18n="what.problem.1.b">What you actually do.</b> <span data-i18n="what.problem.1.p">A killer Postgres skill is worthless to a frontend dev. A README that looks great says nothing about your usage.</span></span></li>
+          <li><span class="num">02</span><span><b data-i18n="what.problem.2.b">What you already have.</b> <span data-i18n="what.problem.2.p">If three of your installed skills already cover this ground, a fourth one just adds context-window tax.</span></span></li>
+          <li><span class="num">03</span><span><b data-i18n="what.problem.3.b">What your machine can run.</b> <span data-i18n="what.problem.3.p">"Requires Docker, gh, ripgrep" — half the skills you try silently fail because some binary isn't on your PATH.</span></span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== HOW IT WORKS ============== -->
+<section class="sect" id="how">
+  <div class="container">
+    <span class="sect-eyebrow" data-i18n="how.eyebrow">02 / How it works</span>
+    <h2 class="sect-title" data-i18n="how.title">Three steps. About four seconds. All on your laptop.</h2>
+    <p class="sect-lede" data-i18n="how.lede">
+      SkillsVote runs locally as a tiny HTTP server on port <code style="background:rgba(91,124,245,0.14);color:var(--brand-1);padding:1px 6px;border-radius:4px;font-family:var(--font-mono);font-size:0.9em">8773</code>. The whole pipeline below happens between hitting Enter and seeing your score.
+    </p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-icon">🔗</div>
+        <h4 data-i18n="how.s1.h">Paste any skill link</h4>
+        <p data-i18n="how.s1.p">A GitHub URL (folder or file), a <code>skills.vote</code> page, or a raw <code>SKILL.md</code>. SkillsVote fetches it and reads the front-matter.</p>
+        <div class="step-visual">
+          <div style="color:var(--ink-3);font-size:11px;margin-bottom:8px;">PASTE</div>
+          <div style="color:var(--ink);word-break:break-all;line-height:1.4;">github.com/anthropics/<wbr>skills/tree/main/skills/<wbr>git-cli</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-icon">🔎</div>
+        <h4 data-i18n="how.s2.h">Scan your local context</h4>
+        <p data-i18n="how.s2.p">Reads your <code>~/.claude</code> prompt history, tokenizes it, builds an IDF index, and probes your shell for the binaries the skill needs.</p>
+        <div class="step-visual" style="font-size:11.5px;">
+          <div class="row" style="color:var(--ink-3)">
+            <span style="width:130px;">prompts scanned</span><span style="color:var(--ink);font-weight:600;">1,243</span>
+          </div>
+          <div class="row" style="color:var(--ink-3)">
+            <span style="width:130px;">distinct tokens</span><span style="color:var(--ink);font-weight:600;">8,914</span>
+          </div>
+          <div class="row" style="color:var(--ink-3)">
+            <span style="width:130px;">OS detected</span><span style="color:var(--ink);font-weight:600;">darwin · arm64</span>
+          </div>
+          <div class="row" style="color:var(--ink-3)">
+            <span style="width:130px;">bins on PATH</span><span style="color:var(--ok);font-weight:600;">git ✓ gh ✓ rg ✓</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-icon">⚖️</div>
+        <h4 data-i18n="how.s3.h">Score & generate install</h4>
+        <p data-i18n="how.s3.p">Five dimensions roll up into a single 0–100 value, with a verdict and a copy-paste install prompt already adapted to your machine.</p>
+        <div class="step-visual">
+          <div class="row"><span class="dim">Relevance</span><span class="b"><i style="width:74%;background:var(--c-relevance)"></i></span><span class="n">74</span></div>
+          <div class="row"><span class="dim">Demand</span><span class="b"><i style="width:66%;background:var(--c-demand)"></i></span><span class="n">66</span></div>
+          <div class="row"><span class="dim">Recency</span><span class="b"><i style="width:91%;background:var(--c-recency)"></i></span><span class="n">91</span></div>
+          <div class="row"><span class="dim">Gap</span><span class="b"><i style="width:66%;background:var(--c-gap)"></i></span><span class="n">66</span></div>
+          <div class="row"><span class="dim">Fit</span><span class="b"><i style="width:100%;background:var(--c-fit)"></i></span><span class="n">100</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== 5-DIMENSION DEEP DIVE ============== -->
+<section class="dims-section" id="dims">
+  <div class="container">
+    <span class="sect-eyebrow" data-i18n="dims.eyebrow">03 / The five dimensions</span>
+    <h2 class="sect-title" data-i18n="dims.title">One score, broken into five questions only your machine can answer.</h2>
+    <p class="sect-lede" data-i18n="dims.lede">
+      Scroll. Each panel shows what one dimension actually measures — and what it sees on a real machine.
+    </p>
+
+    <div class="dims-grid">
+      <!-- left: scrolling steps -->
+      <div class="dim-list">
+        <article class="dim-step" data-dim="0" style="--c:var(--c-relevance)">
+          <div class="dim-num"><span class="swatch"></span> 01 / 05</div>
+          <h3><span data-i18n="dim.relevance.name">Relevance</span><span class="cn">相关</span></h3>
+          <p class="what" data-i18n="dim.relevance.what">How much of the skill's vocabulary actually shows up in your prompts. Rare-but-on-topic terms (like <i>rebase</i>) count more than common filler (like <i>file</i>).</p>
+          <div class="formula"><b>relevance</b> = Σ idf(t) · 1[t ∈ your prompts] / Σ idf(t)</div>
+        </article>
+
+        <article class="dim-step" data-dim="1" style="--c:var(--c-demand)">
+          <div class="dim-num"><span class="swatch"></span> 02 / 05</div>
+          <h3><span data-i18n="dim.demand.name">Demand</span><span class="cn">需求</span></h3>
+          <p class="what" data-i18n="dim.demand.what">How often you actually do tasks in this skill's domain. A log-saturated count of your prompts that hit the skill's <i>distinctive</i> terms — so a million mentions of "the" don't inflate the number.</p>
+          <div class="formula"><b>demand</b> = log(1 + matched) / log(1 + 50)</div>
+        </article>
+
+        <article class="dim-step" data-dim="2" style="--c:var(--c-recency)">
+          <div class="dim-num"><span class="swatch"></span> 03 / 05</div>
+          <h3><span data-i18n="dim.recency.name">Recency</span><span class="cn">时效</span></h3>
+          <p class="what" data-i18n="dim.recency.what">When did you last do something this skill could've helped with? Exponential decay with a half-life of 14 days, so a hot 3-day-old hit weighs more than a stale six-month-old one.</p>
+          <div class="formula"><b>recency</b> = 0.5 ^ (days_since_last / 14)</div>
+        </article>
+
+        <article class="dim-step" data-dim="3" style="--c:var(--c-gap)">
+          <div class="dim-num"><span class="swatch"></span> 04 / 05</div>
+          <h3><span data-i18n="dim.gap.name">Gap</span><span class="cn">缺口</span></h3>
+          <p class="what" data-i18n="dim.gap.what">High demand × not-already-owned = a real capability gap. If you've already installed this exact skill (or a near-duplicate slug), Gap is heavily discounted — installing twice doesn't help.</p>
+          <div class="formula"><b>gap</b> = demand · (already_have ? 0.25 : 1.0)</div>
+        </article>
+
+        <article class="dim-step" data-dim="4" style="--c:var(--c-fit)">
+          <div class="dim-num"><span class="swatch"></span> 05 / 05</div>
+          <h3><span data-i18n="dim.fit.name">Fit</span><span class="cn">适配</span></h3>
+          <p class="what" data-i18n="dim.fit.what">Will it actually run? Checks your OS against any platform markers in the skill, and probes for required binaries on your PATH. A perfectly relevant skill that needs Docker on a Docker-less laptop drops here.</p>
+          <div class="formula"><b>fit</b> = os_compat · bins_available · 1[relevance &gt; 0]</div>
+        </article>
+
+        <article class="dim-step" data-dim="5" style="--c:var(--brand-1)">
+          <div class="dim-num"><span class="swatch"></span> ∑ / Roll-up</div>
+          <h3><span data-i18n="dim.total.name">The verdict</span><span class="cn">总分</span></h3>
+          <p class="what" data-i18n="dim.total.what">A weighted blend of all five. SkillsVote turns that into one of four verdicts — <b style="color:var(--ok)">install</b>, <b style="color:var(--brand-1)">optional</b>, <b style="color:var(--ink-3)">skip</b>, or <b style="color:var(--warn)">already installed</b> — plus a one-paragraph "why".</p>
+          <div class="formula"><b>value</b> = 100 · (0.30·rel + 0.25·dem + 0.20·rec + 0.15·gap + 0.10·fit)</div>
+        </article>
+      </div>
+
+      <!-- right: sticky stage -->
+      <aside class="dim-stage-wrap">
+        <div class="dim-stage" id="dim-stage" style="--c:var(--c-relevance)">
+          <div class="dim-stage-head">
+            <span class="lhs"><span class="swatch"></span> <span id="stage-name">RELEVANCE</span></span>
+            <span class="rhs">
+              <span id="stage-meta-1">1,243 prompts</span>
+              <span id="stage-meta-2">·</span>
+              <span id="stage-meta-3">on-device</span>
+            </span>
+          </div>
+          <div class="dim-stage-canvas" id="stage-canvas">
+            <!-- panels rendered by JS -->
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <!-- weighted formula band -->
+    <div class="formula-band">
+      <span class="term"><span class="sw" style="background:var(--c-relevance)"></span>0.30 · relevance</span>
+      <span>+</span>
+      <span class="term"><span class="sw" style="background:var(--c-demand)"></span>0.25 · demand</span>
+      <span>+</span>
+      <span class="term"><span class="sw" style="background:var(--c-recency)"></span>0.20 · recency</span>
+      <span>+</span>
+      <span class="term"><span class="sw" style="background:var(--c-gap)"></span>0.15 · gap</span>
+      <span>+</span>
+      <span class="term"><span class="sw" style="background:var(--c-fit)"></span>0.10 · fit</span>
+      <span class="eq">×&nbsp;100&nbsp;=</span>
+      <span class="out"><span data-i18n="dims.outlabel">your personalised score</span></span>
+    </div>
+  </div>
+</section>
+
+<!-- ============== PRIVACY ============== -->
+<section class="sect" id="privacy">
+  <div class="container">
+    <span class="sect-eyebrow" data-i18n="privacy.eyebrow">04 / Privacy</span>
+    <h2 class="sect-title" data-i18n="privacy.title">Your prompts are sensitive. They never leave the machine.</h2>
+    <p class="sect-lede" data-i18n="privacy.lede">
+      SkillsVote is one Python process bound to <code style="background:rgba(91,124,245,0.14);color:var(--brand-1);padding:1px 6px;border-radius:4px;font-family:var(--font-mono);font-size:0.9em">127.0.0.1</code>. There is no telemetry, no analytics SDK, no "anonymous" payload — and the network only gets touched at one well-defined moment.
+    </p>
+
+    <div class="privacy">
+      <div class="privacy-claims">
+        <div class="claim">
+          <span class="ic">🏠</span>
+          <div>
+            <h4 data-i18n="privacy.c1.h">Bound to 127.0.0.1</h4>
+            <p data-i18n="privacy.c1.p">The HTTP server only listens on loopback. Your LAN can't reach it, let alone the internet.</p>
+          </div>
+        </div>
+        <div class="claim">
+          <span class="ic">📁</span>
+          <div>
+            <h4 data-i18n="privacy.c2.h">Your <code>~/.claude</code> stays put</h4>
+            <p data-i18n="privacy.c2.p">Prompt history is tokenised and IDF-indexed <i>in memory</i>. The corpus is read at startup; never copied, never written elsewhere.</p>
+          </div>
+        </div>
+        <div class="claim">
+          <span class="ic">🔌</span>
+          <div>
+            <h4 data-i18n="privacy.c3.h">One outbound call, by you</h4>
+            <p data-i18n="privacy.c3.p">The only network request is when <b>you</b> paste a link — SkillsVote fetches that skill's public README. Nothing else is uploaded.</p>
+          </div>
+        </div>
+        <div class="claim">
+          <span class="ic">🛠️</span>
+          <div>
+            <h4 data-i18n="privacy.c4.h">Open-source, MIT</h4>
+            <p data-i18n="privacy.c4.p">~2,000 lines of Python. <a href="https://github.com/horton2048/skillsvote-local" style="color:var(--brand-1);text-decoration:underline;text-underline-offset:3px;">Read every line on GitHub</a> before you run it.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="machine" aria-hidden="true">
+        <div class="ring r1"></div>
+        <div class="ring r2"></div>
+        <div class="ring r3"></div>
+        <div class="laptop">
+          <div class="screen-bar"><i></i><i></i><i></i></div>
+          <div class="screen-body">
+            <div class="ln"><span class="lc">01</span><span class="lt">$ <b>uvx skillsvote</b></span></div>
+            <div class="ln"><span class="lc">02</span><span class="lt" style="color:var(--ok)">› scanned 1,243 prompts</span></div>
+            <div class="ln"><span class="lc">03</span><span class="lt" style="color:var(--ok)">› detected darwin · arm64</span></div>
+            <div class="ln"><span class="lc">04</span><span class="lt" style="color:var(--ok)">› bins ok: git, gh, rg, uv</span></div>
+            <div class="ln"><span class="lc">05</span><span class="lt">› listening 127.0.0.1:<b>8773</b></span></div>
+            <div class="ln"><span class="lc">06</span><span class="lt" style="color:var(--ink-4)">  ─────────────────</span></div>
+            <div class="ln"><span class="lc">07</span><span class="lt">→ POST /api/assess</span></div>
+            <div class="ln"><span class="lc">08</span><span class="lt" style="color:var(--ok)">  scored 78/100 → install</span></div>
+          </div>
+          <div class="keyboard"></div>
+        </div>
+        <div class="cloud-x"><span data-i18n="privacy.cloud">no cloud</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== VERDICTS ============== -->
+<section class="sect" id="verdicts">
+  <div class="container">
+    <span class="sect-eyebrow" data-i18n="verdicts.eyebrow">05 / What you get back</span>
+    <h2 class="sect-title" data-i18n="verdicts.title">Four verdicts. One install prompt. Zero guesswork.</h2>
+    <p class="sect-lede" data-i18n="verdicts.lede">
+      Every assessment ends with one of four labels — so you can triage a long list of candidate skills the way you triage a PR queue.
+    </p>
+
+    <div class="verdicts">
+      <div class="verdict-card" style="--c:var(--ok)">
+        <span class="badge">● <span data-i18n="verdicts.install.label">Install</span></span>
+        <h4 data-i18n="verdicts.install.h">Strong fit</h4>
+        <div class="score">75<small>+/100</small></div>
+        <p data-i18n="verdicts.install.p">Relevant, in demand, recent activity, and your environment supports it. Worth the context-window slot.</p>
+      </div>
+      <div class="verdict-card" style="--c:var(--brand-1)">
+        <span class="badge">● <span data-i18n="verdicts.optional.label">Optional</span></span>
+        <h4 data-i18n="verdicts.optional.h">Mildly useful</h4>
+        <div class="score">45<small>–74</small></div>
+        <p data-i18n="verdicts.optional.p">You touch this area sometimes. Install if you're stocking up the library; skip if you're keeping it lean.</p>
+      </div>
+      <div class="verdict-card" style="--c:var(--ink-3)">
+        <span class="badge">● <span data-i18n="verdicts.skip.label">Skip</span></span>
+        <h4 data-i18n="verdicts.skip.h">Not for you (yet)</h4>
+        <div class="score">&lt;45<small></small></div>
+        <p data-i18n="verdicts.skip.p">Either you don't do this kind of work, or your machine can't run it. Bookmark and re-check later.</p>
+      </div>
+      <div class="verdict-card" style="--c:var(--warn)">
+        <span class="badge">● <span data-i18n="verdicts.already.label">Already</span></span>
+        <h4 data-i18n="verdicts.already.h">You already have it</h4>
+        <div class="score">—<small></small></div>
+        <p data-i18n="verdicts.already.p">Matches a slug already in your installed skill set. SkillsVote flags it and suggests an upgrade-or-skip.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== FAQ ============== -->
+<section class="sect" id="faq">
+  <div class="container">
+    <span class="sect-eyebrow" data-i18n="faq.eyebrow">06 / FAQ</span>
+    <h2 class="sect-title" data-i18n="faq.title">Quick answers.</h2>
+
+    <div class="faq">
+      <details open>
+        <summary data-i18n="faq.q1.q">Do I need a Claude API key to run this?</summary>
+        <p data-i18n="faq.q1.a">No. SkillsVote-local is the <i>scoring</i> tool — it runs entirely on your machine without any API key. The optional hosted <code>skills-vote</code> integration (a separate package from MemTensor) is the only thing that uses a key.</p>
+      </details>
+      <details>
+        <summary data-i18n="faq.q2.q">Where does the "your usage history" come from?</summary>
+        <p data-i18n="faq.q2.a">From <code>~/.claude</code> on your machine — Claude Code stores your prompt sessions there. You can point at a non-default path with <code>--claude-home PATH</code>. If you've never run Claude Code, there's simply no history to score against and SkillsVote will say so.</p>
+      </details>
+      <details>
+        <summary data-i18n="faq.q3.q">Does it work with non-Claude agents?</summary>
+        <p data-i18n="faq.q3.a">The scoring model is agent-agnostic — it just needs a prompt corpus. The current scanner reads Claude Code's format; PRs adding readers for Codex, OpenClaw, etc. are very welcome on GitHub.</p>
+      </details>
+      <details>
+        <summary data-i18n="faq.q4.q">What if a skill scores high but I disagree?</summary>
+        <p data-i18n="faq.q4.a">Trust your gut over the number. SkillsVote is a triage signal, not a verdict you have to obey — it tells you <i>why</i> it scored what it did, and you decide. The output shows the matched terms, prompt count, and recency so you can sanity-check.</p>
+      </details>
+      <details>
+        <summary data-i18n="faq.q5.q">How is this different from skills.vote?</summary>
+        <p data-i18n="faq.q5.a">skills.vote (and the upstream <code>MemTensor/skills-vote</code>) is a global recommendation index — what's popular, what's high-quality across all users. SkillsVote-local is the personal layer on top: <i>given</i> a candidate, is it for <b>me</b>, on <b>this</b> machine?</p>
+      </details>
+      <details>
+        <summary data-i18n="faq.q6.q">Can I use this on private/internal skills?</summary>
+        <p data-i18n="faq.q6.a">Yes — paste a path to a local <code>SKILL.md</code> or a private GitHub URL (with <code>GH_TOKEN</code> in your environment). The fetch happens on your machine; nothing about the skill is shipped anywhere.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============== INSTALL / CTA ============== -->
+<section class="sect" id="install" style="border-top:0;padding-bottom:40px;">
+  <div class="container">
+    <div class="cta">
+      <h2 data-i18n="cta.h">Try it on your next skill link.</h2>
+      <p data-i18n="cta.p">One command. No account. No telemetry. Closes when you close the terminal.</p>
+      <div class="cmd-row" data-copy-row style="max-width:540px;">
+        <span class="prompt">$</span>
+        <code data-i18n="cta.cmd">uvx --from "https://github.com/horton2048/skillsvote-local/releases/download/v0.2.1/skillsvote-0.2.1-py3-none-any.whl" skillsvote</code>
+        <button class="copy" data-copy-target><span data-i18n="cta.copy">Copy</span></button>
+      </div>
+      <div class="alt" data-i18n="cta.alt">After PyPI release: <code>uvx skillsvote</code> · or <code>pipx run skillsvote</code></div>
+      <div class="cta-links">
+        <a href="https://github.com/horton2048/skillsvote-local" target="_blank" rel="noreferrer">
+          <span>★</span> <span data-i18n="cta.l1">Star on GitHub</span>
+        </a>
+        <a href="https://github.com/horton2048/skillsvote-local/releases" target="_blank" rel="noreferrer">
+          <span>📦</span> <span data-i18n="cta.l2">Releases</span>
+        </a>
+        <a href="https://github.com/MemTensor/skills-vote" target="_blank" rel="noreferrer">
+          <span>🧬</span> <span data-i18n="cta.l3">Upstream: MemTensor/skills-vote</span>
+        </a>
+        <a href="https://arxiv.org/abs/2605.18401" target="_blank" rel="noreferrer">
+          <span>📄</span> <span data-i18n="cta.l4">arXiv:2605.18401</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== FOOT ============== -->
+<footer class="foot">
+  <div class="container foot-inner">
+    <div>
+      <span data-i18n="foot.built">Built on </span><a href="https://github.com/MemTensor/skills-vote">MemTensor/skills-vote</a><span data-i18n="foot.built2"> · MIT licensed · Not affiliated with Anthropic.</span>
+    </div>
+    <div class="ascii">─── 127.0.0.1:8773 ───</div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
