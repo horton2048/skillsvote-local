@@ -21,7 +21,7 @@ def run(argv: list[str] | None = None) -> None:
     parser.add_argument("--no-open", action="store_true", help="启动后不自动打开浏览器")
     args = parser.parse_args(argv)
 
-    from skills_vote.score.web import serve
+    from skillsvote.web import serve
 
     serve(port=args.port, claude_home=args.claude_home, open_browser=not args.no_open)
 

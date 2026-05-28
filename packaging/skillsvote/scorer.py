@@ -3,16 +3,16 @@ from __future__ import annotations
 import math
 from pathlib import Path
 
-from skills_vote.score.model import (
+from skillsvote.model import (
     ScoreConfig,
     ScoreDimensions,
     SkillDescriptor,
     SkillScore,
     UserProfile,
 )
-from skills_vote.score.skill_source import load_skills
-from skills_vote.score.tokenize import tokenize
-from skills_vote.score.usage_scan import scan_user_profile
+from skillsvote.skill_source import load_skills
+from skillsvote.tokenize import tokenize
+from skillsvote.usage_scan import scan_user_profile
 
 _DAY_MS = 86_400_000
 

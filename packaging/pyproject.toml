@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "skillsvote"
-version = "0.1.0"
+version = "0.2.0"
 description = "Local-first, personalized 'should I install this skill?' assessor for Claude Code agents."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -14,24 +14,16 @@ keywords = ["claude-code", "agent-skills", "mcp", "skill-recommendation"]
 dependencies = ["pydantic>=2.0", "PyYAML>=6.0"]
 
 [project.urls]
-Homepage = "https://github.com/MemTensor/skills-vote"
+Homepage = "https://github.com/horton2048/skillsvote-local"
+Upstream = "https://github.com/MemTensor/skills-vote"
 
 [project.scripts]
-skillsvote = "skills_vote.score.cli:run"
+skillsvote = "skillsvote.cli:run"
 
-# Single source of truth: the code lives in ../src/skills_vote/score. We ship
-# only that subpackage (plus an empty package init) with minimal deps, leaving
-# the heavy research modules (harbor, claude-agent-sdk) out of the distribution.
+# Self-contained: the package lives right here in ./skillsvote, so wheel, sdist
+# and git installs all build cleanly (no reaching outside the project root).
 [tool.hatch.build.targets.wheel]
-bypass-selection = true
-
-[tool.hatch.build.targets.wheel.force-include]
-"../src/skills_vote/__init__.py" = "skills_vote/__init__.py"
-"../src/skills_vote/score" = "skills_vote/score"
+packages = ["skillsvote"]
 
 [tool.hatch.build.targets.sdist]
-only-include = ["pyproject.toml", "README.md"]
-
-[tool.hatch.build.targets.sdist.force-include]
-"../src/skills_vote/__init__.py" = "src/skills_vote/__init__.py"
-"../src/skills_vote/score" = "src/skills_vote/score"
+include = ["skillsvote", "README.md", "pyproject.toml"]

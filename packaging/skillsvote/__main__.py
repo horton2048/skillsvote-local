@@ -5,14 +5,14 @@ import json
 import sys
 from pathlib import Path
 
-from skills_vote.score.model import ScoreConfig
-from skills_vote.score.scorer import rank_skills_for_user, score_skill_library
-from skills_vote.score.usage_scan import default_claude_home, scan_user_profile
+from skillsvote.model import ScoreConfig
+from skillsvote.scorer import rank_skills_for_user, score_skill_library
+from skillsvote.usage_scan import default_claude_home, scan_user_profile
 
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        prog="python -m skills_vote.score",
+        prog="python -m skillsvote",
         description="Score agent skills by personalized value to the local user.",
     )
     parser.add_argument(
@@ -69,12 +69,12 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def _default_html_path() -> Path:
-    project_root = Path(__file__).resolve().parents[3]
+    project_root = Path(__file__).resolve().parents[2]
     return project_root / "output" / "for-you.html"
 
 
 def _run_assess(link: str, *, claude_home: Path | None, as_json: bool) -> None:
-    from skills_vote.score.assess import assess_skill
+    from skillsvote.assess import assess_skill
 
     result = assess_skill(link, claude_home=claude_home)
     if as_json:
@@ -102,7 +102,7 @@ def main(argv: list[str] | None = None) -> None:
     config = ScoreConfig()
 
     if args.web:
-        from skills_vote.score.web import serve
+        from skillsvote.web import serve
 
         serve(claude_home=args.claude_home, port=args.port)
         return
@@ -130,7 +130,7 @@ def main(argv: list[str] | None = None) -> None:
         scores = scores[: args.top_k]
 
     if args.html is not None:
-        from skills_vote.score.report import render_html
+        from skillsvote.report import render_html
 
         out_path = Path(args.html)
         out_path.parent.mkdir(parents=True, exist_ok=True)

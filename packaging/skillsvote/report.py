@@ -3,7 +3,7 @@ from __future__ import annotations
 import html
 from datetime import datetime
 
-from skills_vote.score.model import SkillScore
+from skillsvote.model import SkillScore
 
 _DIMENSIONS = [
     ("relevance", "相关"),

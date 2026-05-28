@@ -7,7 +7,7 @@ from pathlib import Path
 
 import yaml
 
-from skills_vote.score.model import SkillDescriptor
+from skillsvote.model import SkillDescriptor
 
 _FRONTMATTER_RE = re.compile(r"^﻿?---\s*\n(.*?)\n---\s*\n", re.DOTALL)
 

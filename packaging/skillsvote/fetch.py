@@ -6,8 +6,8 @@ import urllib.request
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from skills_vote.score.model import SkillDescriptor
-from skills_vote.score.skill_source import parse_frontmatter, parse_skill_md
+from skillsvote.model import SkillDescriptor
+from skillsvote.skill_source import parse_frontmatter, parse_skill_md
 
 _UA = "skills-vote-scoring/0.1 (+local skill assessor)"
 _TIMEOUT = 15

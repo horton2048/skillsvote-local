@@ -6,11 +6,11 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from skills_vote.score.environment import COMMON_BINS, LocalEnvironment, detect_environment
-from skills_vote.score.fetch import FetchedSkill, fetch_skill
-from skills_vote.score.model import ScoreConfig, SkillScore, UserProfile
-from skills_vote.score.scorer import build_idf, score_skill
-from skills_vote.score.usage_scan import scan_user_profile
+from skillsvote.environment import COMMON_BINS, LocalEnvironment, detect_environment
+from skillsvote.fetch import FetchedSkill, fetch_skill
+from skillsvote.model import ScoreConfig, SkillScore, UserProfile
+from skillsvote.scorer import build_idf, score_skill
+from skillsvote.usage_scan import scan_user_profile
 
 Verdict = Literal["install", "optional", "skip", "already"]
 

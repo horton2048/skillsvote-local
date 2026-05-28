@@ -6,6 +6,6 @@ rem server, and opens the page in your browser. Press Ctrl+C to stop.
 setlocal
 set "PYTHONUTF8=1"
 set "PROJDIR=%~dp0"
-set "PYTHONPATH=%PROJDIR%src"
-"%PROJDIR%.venv-score\Scripts\python.exe" -m skills_vote.score --web %*
+set "PYTHONPATH=%PROJDIR%packaging"
+"%PROJDIR%.venv-score\Scripts\python.exe" -m skillsvote --web %*
 endlocal

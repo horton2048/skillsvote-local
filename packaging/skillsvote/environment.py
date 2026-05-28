@@ -8,7 +8,7 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from skills_vote.score.usage_scan import default_claude_home
+from skillsvote.usage_scan import default_claude_home
 
 OsKind = Literal["windows", "macos", "linux", "other"]
 

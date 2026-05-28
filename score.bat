@@ -9,6 +9,6 @@ rem   score.bat --json
 setlocal
 set "PYTHONUTF8=1"
 set "PROJDIR=%~dp0"
-set "PYTHONPATH=%PROJDIR%src"
-"%PROJDIR%.venv-score\Scripts\python.exe" -m skills_vote.score --skills-dir "%USERPROFILE%\.claude\skills" --exclude pers-* seed-* %*
+set "PYTHONPATH=%PROJDIR%packaging"
+"%PROJDIR%.venv-score\Scripts\python.exe" -m skillsvote --skills-dir "%USERPROFILE%\.claude\skills" --exclude pers-* seed-* %*
 endlocal

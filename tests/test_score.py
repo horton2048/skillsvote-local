@@ -7,7 +7,7 @@ from pathlib import Path
 import pytest
 from pydantic import ValidationError
 
-from skills_vote.score import (
+from skillsvote import (
     ScoreWeights,
     SkillDescriptor,
     load_skills,
@@ -15,7 +15,7 @@ from skills_vote.score import (
     scan_user_profile,
     score_skills,
 )
-from skills_vote.score.tokenize import extract_slash_commands, tokenize
+from skillsvote.tokenize import extract_slash_commands, tokenize
 
 
 def _write_skill(skills_dir: Path, name: str, description: str) -> None:
@@ -143,7 +143,7 @@ def test_weights_must_sum_to_one():
 
 
 def test_fetch_github_url_resolution(monkeypatch):
-    from skills_vote.score import fetch as fetch_mod
+    from skillsvote import fetch as fetch_mod
 
     captured = {}
 
@@ -160,7 +160,7 @@ def test_fetch_github_url_resolution(monkeypatch):
 
 
 def test_assess_local_skill(tmp_path: Path):
-    from skills_vote.score.assess import assess_skill
+    from skillsvote.assess import assess_skill
 
     now = int(time.time() * 1000)
     home = tmp_path / "home"

@@ -11,7 +11,7 @@
 > ```
 > 发布到 PyPI 后会更简单:`uvx skillsvote`(或 `pipx run skillsvote`)。
 >
-> 代码在 [`src/skills_vote/score/`](src/skills_vote/score),打包配置在 [`packaging/`](packaging)。
+> 代码在 [`packaging/skillsvote/`](packaging/skillsvote)(自包含独立包),打包配置在 [`packaging/`](packaging)。
 > 详见 [packaging/README.md](packaging/README.md)。最新版本见
 > [Releases](https://github.com/horton2048/skillsvote-local/releases)。
 

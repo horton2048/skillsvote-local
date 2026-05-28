@@ -7,11 +7,11 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
-from skills_vote.score.assess import assess_skill
-from skills_vote.score.environment import LocalEnvironment, detect_environment
-from skills_vote.score.fetch import SkillFetchError
-from skills_vote.score.model import UserProfile
-from skills_vote.score.usage_scan import scan_user_profile
+from skillsvote.assess import assess_skill
+from skillsvote.environment import LocalEnvironment, detect_environment
+from skillsvote.fetch import SkillFetchError
+from skillsvote.model import UserProfile
+from skillsvote.usage_scan import scan_user_profile
 
 # TailGrids-styled single page (Tailwind via Play CDN, no build step).
 _PAGE = """<!doctype html><html lang="zh-CN"><head>

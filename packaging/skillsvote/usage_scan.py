@@ -4,8 +4,8 @@ import json
 import time
 from pathlib import Path
 
-from skills_vote.score.model import UserProfile
-from skills_vote.score.tokenize import extract_slash_commands, tokenize
+from skillsvote.model import UserProfile
+from skillsvote.tokenize import extract_slash_commands, tokenize
 
 
 def default_claude_home() -> Path:
