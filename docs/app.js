@@ -2,6 +2,54 @@
 (function () {
   'use strict';
 
+  // ---------- telemetry ----------
+  // anonymized landing events → Supabase via Edge Function
+  // no PII; no cookies; client_ip is captured server-side only
+  const TELEMETRY_URL = 'https://qsucbumdikaczbjpfdmv.supabase.co/functions/v1/skillsvote-track';
+  const tel = (function () {
+    let sessionId;
+    try {
+      sessionId = sessionStorage.getItem('skillsvote.sid');
+      if (!sessionId) {
+        sessionId = (crypto.randomUUID && crypto.randomUUID()) ||
+          (Date.now().toString(36) + Math.random().toString(36).slice(2));
+        sessionStorage.setItem('skillsvote.sid', sessionId);
+      }
+    } catch (e) { sessionId = null; }
+    const isBot = /bot|crawler|spider|crawling|preview/i.test(navigator.userAgent || '');
+    const send = (event_name, props) => {
+      if (isBot) return;
+      const payload = {
+        event_name,
+        source: 'landing',
+        session_id: sessionId,
+        lang: document.body && document.body.dataset ? document.body.dataset.lang : null,
+        path: location.pathname + location.search,
+        referrer: document.referrer || null,
+        app_version: 'landing@1',
+        props: props || {},
+      };
+      const body = JSON.stringify(payload);
+      try {
+        if (navigator.sendBeacon) {
+          const blob = new Blob([body], { type: 'application/json' });
+          if (navigator.sendBeacon(TELEMETRY_URL, blob)) return;
+        }
+      } catch (e) {}
+      try {
+        fetch(TELEMETRY_URL, {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body,
+          keepalive: true,
+          mode: 'cors',
+        }).catch(() => {});
+      } catch (e) {}
+    };
+    return { send };
+  })();
+  window.__skillsvoteTrack = tel.send;
+
   // ---------- i18n ----------
   const I18N = {
     en: {
@@ -286,13 +334,19 @@
   };
 
   document.querySelectorAll('.lang-toggle button').forEach((btn) => {
-    btn.addEventListener('click', () => applyLang(btn.dataset.lang));
+    btn.addEventListener('click', () => {
+      const from = document.body.dataset.lang;
+      const to = btn.dataset.lang;
+      if (from !== to) tel.send('lang_switched', { from, to });
+      applyLang(to);
+    });
   });
 
   const initialLang = (() => {
     try { return localStorage.getItem('skillsvote.lang') || 'en'; } catch (e) { return 'en'; }
   })();
   applyLang(initialLang);
+  tel.send('page_view', { initial_lang: initialLang });
 
   // ---------- copy buttons ----------
   document.querySelectorAll('[data-copy-row]').forEach((row) => {
@@ -301,6 +355,9 @@
     if (!btn || !code) return;
     btn.addEventListener('click', () => {
       const text = code.textContent.trim();
+      const i18nKey = code.getAttribute('data-i18n') || '';
+      const location = i18nKey.startsWith('cta.') ? 'cta' : (i18nKey.startsWith('hero.') ? 'hero' : 'other');
+      tel.send('copy_command', { location, cmd_len: text.length });
       const done = () => {
         btn.classList.add('copied');
         const span = btn.querySelector('span');
@@ -603,5 +660,39 @@
     });
   }, { rootMargin: '0px 0px -10% 0px' });
   fadeTargets.forEach((el) => fadeObs.observe(el));
+
+  // ---------- CTA link clicks ----------
+  document.querySelectorAll('.cta-links a[href]').forEach((a) => {
+    a.addEventListener('click', () => {
+      const href = a.getAttribute('href') || '';
+      let name = 'other';
+      if (/\/releases(\/?|$)/.test(href)) name = 'releases';
+      else if (/MemTensor\/skills-vote/.test(href)) name = 'upstream';
+      else if (/skillsvote-local(\/?$|\?)/.test(href) || /github\.com\/horton2048\/skillsvote-local\/?$/.test(href)) name = 'github_star';
+      tel.send('cta_link_clicked', { name, href });
+    });
+  });
+
+  // ---------- scroll depth (25/50/75/100, fire once each) ----------
+  const fired = new Set();
+  const checkScroll = () => {
+    const h = document.documentElement;
+    const total = (h.scrollHeight - h.clientHeight) || 1;
+    const pct = Math.min(100, Math.round((h.scrollTop / total) * 100));
+    [25, 50, 75, 100].forEach((m) => {
+      if (pct >= m && !fired.has(m)) {
+        fired.add(m);
+        tel.send('scroll_depth', { depth: m });
+      }
+    });
+    if (fired.size === 4) window.removeEventListener('scroll', onScroll);
+  };
+  let scrollTick = false;
+  const onScroll = () => {
+    if (scrollTick) return;
+    scrollTick = true;
+    requestAnimationFrame(() => { checkScroll(); scrollTick = false; });
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
 
 })();

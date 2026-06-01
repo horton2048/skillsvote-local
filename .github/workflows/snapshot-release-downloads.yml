@@ -1,0 +1,39 @@
+name: snapshot-release-downloads
+
+on:
+  schedule:
+    # 03:17 UTC daily — off the hour to avoid scheduler peak
+    - cron: '17 3 * * *'
+  workflow_dispatch:
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Snapshot GitHub Release download counts to Supabase
+        env:
+          CRON_TOKEN: ${{ secrets.SKILLSVOTE_CRON_TOKEN }}
+          SNAPSHOT_URL: https://qsucbumdikaczbjpfdmv.supabase.co/functions/v1/skillsvote-snapshot
+        run: |
+          set -euo pipefail
+          if [ -z "${CRON_TOKEN}" ]; then
+            echo "::warning::SKILLSVOTE_CRON_TOKEN not set — skipping snapshot"
+            exit 0
+          fi
+          releases_json=$(curl -fsSL \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${{ github.repository }}/releases?per_page=100")
+          assets_json=$(echo "$releases_json" | jq '[
+            .[] | .tag_name as $tag |
+            .assets[]? | { name: .name, tag: $tag, download_count: .download_count }
+          ]')
+          count=$(echo "$assets_json" | jq 'length')
+          echo "Captured $count release assets"
+          if [ "$count" -eq 0 ]; then
+            echo "No assets to snapshot — exiting."
+            exit 0
+          fi
+          curl -fsS -X POST "$SNAPSHOT_URL" \
+            -H "authorization: Bearer ${CRON_TOKEN}" \
+            -H "content-type: application/json" \
+            -d "{\"assets\": $assets_json}"
