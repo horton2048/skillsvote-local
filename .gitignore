@@ -284,3 +284,6 @@ $RECYCLE.BIN/
 
 # local test venv (skills_vote.score)
 .venv-score/
+
+# Vercel
+.vercel/
