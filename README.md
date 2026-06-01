@@ -6,10 +6,9 @@
 >
 > 一键运行(从 Release 安装,无需克隆):
 > ```bash
-> uvx --from "https://github.com/horton2048/skillsvote-local/releases/download/v0.1.0/skillsvote-0.1.0-py3-none-any.whl" skillsvote
+> uvx --from "https://github.com/horton2048/skillsvote-local/releases/download/v0.2.1/skillsvote-0.2.1-py3-none-any.whl" skillsvote
 > # 然后浏览器打开 http://127.0.0.1:8773
 > ```
-> 发布到 PyPI 后会更简单:`uvx skillsvote`(或 `pipx run skillsvote`)。
 >
 > 代码在 [`packaging/skillsvote/`](packaging/skillsvote)(自包含独立包),打包配置在 [`packaging/`](packaging)。
 > 详见 [packaging/README.md](packaging/README.md)。最新版本见

@@ -10,7 +10,7 @@ install prompt adapted to your machine. **Your data never leaves your computer.*
 ## Run it (no install)
 
 ```bash
-uvx skillsvote          # or: pipx run skillsvote
+uvx --from "https://github.com/horton2048/skillsvote-local/releases/download/v0.2.1/skillsvote-0.2.1-py3-none-any.whl" skillsvote
 ```
 
 A local page opens at http://127.0.0.1:8773 — paste a skill link and go.
