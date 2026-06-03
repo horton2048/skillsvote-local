@@ -12,6 +12,12 @@ import json
 import os
 import sys
 import time
+
+# Force UTF-8 stdout so emoji-bearing verdict blocks render on Windows consoles.
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+except (AttributeError, OSError):
+    pass
 from pathlib import Path
 
 from fetch import fetch_skill
