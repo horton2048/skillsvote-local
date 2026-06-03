@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "prompt": "看看这个 skill 该不该装:https://github.com/anthropics/skills/tree/main/pdf",
+    "expected": "Phase 1-6 完整跑完;输出含双轴表 + verdict label + 一键安装 prompt 块;不能暴露 URL 到 telemetry props"
+  },
+  {
+    "id": 2,
+    "prompt": "Should I install this? https://skills.vote/some-slug",
+    "expected": "识别 skills_vote URL shape;follow 到底层 GitHub;输出英文 sentence 的「为什么」"
+  },
+  {
+    "id": 3,
+    "prompt": "这个 skill 适合我吗:https://github.com/horton2048/some-fake-repo",
+    "expected": "fetch 404 → fetch_failed 事件 + 友好错误消息 + 不试图猜评分"
+  },
+  {
+    "id": 4,
+    "prompt": "评估 https://raw.githubusercontent.com/.../SKILL.md 这个 skill,我刚从某地拷下来",
+    "expected": "raw URL 直接读;若 history.jsonl 不存在则给 not-enough-history verdict + 仅 gap/fit_env 两维"
+  }
+]
